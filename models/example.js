@@ -1,13 +1,21 @@
 module.exports = function (sequelize, DataTypes) {
-
-  var game = sequelize.define("game", {
+  var Game = sequelize.define("Game", {
     username: {
       type: DataTypes.STRING,
-      allowNull: false,
-      len: [1, 20]
+      allowNull: true,
+      defaultValue: "",
     },
-    wins: DataTypes.INTEGER,
-    losses: DataTypes.INTEGER
+    wins: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0
+    },
+    losses: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0
+    }
   });
-  return game;
+  return Game;
+
 };

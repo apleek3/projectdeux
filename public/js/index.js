@@ -35,7 +35,7 @@ var refreshgames = function() {
   API.getgames().then(function(data) {
     var $games = data.map(function(game) {
       var $a = $("<a>")
-        .text(game.text)
+        .text(game.username)
         .attr("href", "/game/" + game.id);
 
       var $li = $("<li>")

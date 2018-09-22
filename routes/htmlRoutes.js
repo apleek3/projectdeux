@@ -1,27 +1,20 @@
 var db = require("../models");
+var path = require("path");
 
-module.exports = function(app) {
+
+module.exports = function (app) {
   // Load index page
-  app.get("/", function(req, res) {
-    db.Games.findAll({}).then(function(dbGames) {
-      res.render("index", {
-        msg: "Welcome!",
-        games: dbGames
-      });
-    });
+  app.get("/", function (req, res) {
+    res.render("../views/index.handlebars");
   });
 
   // Load game page and pass in an game by id
-  app.get("/game/:id", function(req, res) {
-    db.Games.findOne({ where: { id: req.params.id } }).then(function(dbGame) {
-      res.render("game", {
-        game: dbGame
-      });
-    });
+  app.get("/game/:id", function (req, res) {
+    res.render("../views/example.handlebars");
   });
 
   // Render 404 page for any unmatched routes
-  app.get("*", function(req, res) {
+  app.get("*", function (req, res) {
     res.render("404");
   });
 };
