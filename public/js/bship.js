@@ -1,3 +1,17 @@
+/* <script src="https://www.gstatic.com/firebasejs/5.5.1/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyCcrKJgxnJp0SkukTc1HhI-dkxMfX3jT2s",
+    authDomain: "battleship-167f9.firebaseapp.com",
+    databaseURL: "https://battleship-167f9.firebaseio.com",
+    projectId: "battleship-167f9",
+    storageBucket: "battleship-167f9.appspot.com",
+    messagingSenderId: "167042498206"
+  };
+  firebase.initializeApp(config);
+</script> */
+
 /**
  * @desc executes the jQuery append function multiple times with a single jQuery object.
  * @param {object} appThis jQuery object with content to append
