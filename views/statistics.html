@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Statistics</title>
+
+    <link rel="icon" type="image/png" sizes="16x16" href="../public/assets/images/favicon.png"><!-- Favicon -->
+    <link href="../public/assets/libs/flot/css/float-chart.css" rel="stylesheet"><!-- Chart CSS -->
+    <link href="../public/assets/dist/css/style.min.css" rel="stylesheet"><!-- Custom CSS -->
+</head>
+
+<body>
+
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+
+    <div id="main-wrapper">
+
+        <header class="topbar" data-navbarbg="skin5">
+            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+
+                <div class="navbar-header" data-logobg="skin5">
+                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)">
+                        <i class="ti-menu ti-close"></i>
+                    </a>
+                    <a class="navbar-brand" href="game.html">
+                        <b class="logo-icon p-l-10">
+                            <img src="../public/assets/images/logo-icon.png" alt="homepage" class="light-logo" />
+                        </b>
+                        <span class="logo-text">
+                            <img src="../public/assets/images/logo-text.png" alt="homepage" class="light-logo" />
+                        </span>
+                    </a>
+                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="ti-more"></i>
+                    </a>
+                </div>
+
+                <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
+                    <ul class="navbar-nav float-left mr-auto">
+                        <li class="nav-item d-none d-md-block">
+                            <a class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)" data-sidebartype="mini-sidebar">
+                                <i class="mdi mdi-menu font-24"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav float-right"><!-- This ul section is only needed if we want users to be able to sign in and out. Otherwise, delete. -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src="../public/assets/images/user.jpg" alt="user" class="rounded-circle" width="31">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right user-dd animated">
+                                <a class="dropdown-item" href="javascript:void(0)">
+                                    <i class="ti-user m-r-5 m-l-5"></i> My Profile
+                                </a>
+                                <a class="dropdown-item" href="javascript:void(0)">
+                                    <i class="ti-settings m-r-5 m-l-5"></i> Account Setting
+                                </a>
+                                <a class="dropdown-item" href="javascript:void(0)">
+                                    <i class="fa fa-power-off m-r-5 m-l-5"></i> Logout
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            </nav>
+        </header>
+
+        <aside class="left-sidebar" data-sidebarbg="skin5">
+            <div class="scroll-sidebar">
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav" class="p-t-30">
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="game.html" aria-expanded="false">
+                                <i class="fas fa-anchor"></i>
+                                <span class="hide-menu">New Battle</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="rules.html" aria-expanded="false">
+                                <i class="fas fa-book"></i>
+                                <span class="hide-menu">Rules of Engagement</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="leaderboard.html" aria-expanded="false">
+                                <i class="fas fa-clipboard-list"></i>
+                                <span class="hide-menu">Leaderboard</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="statistics.html" aria-expanded="false">
+                                <i class="fas fa-chart-bar"></i>
+                                <span class="hide-menu">Statistics</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <div class="page-wrapper">
+
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-12 d-flex no-block align-items-center">
+                        <h4 class="page-title">Statistics</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Placeholder</h5>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                </p>
+                                <p>
+                                    Enjoy these currently meaningless charts that we might use for something:
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Real Time Chart</h5>
+                                <div id="real-time" style="height:400px;"></div>
+                                <p>Time between updates:
+                                    <input id="updateInterval" type="text" value="" style="text-align: right; width:5em"> milliseconds
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Turning-series chart</h5>
+                                <div id="placeholder" style="height: 400px;"></div>
+                                <p id="choices" class="m-t-20"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-3">
+                        <div class="card m-t-0">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="peity_line_neutral left text-center m-t-10">
+                                        <span>
+                                            <span style="display: none;">10,15,8,14,13,10,10</span>
+                                            <canvas width="50" height="24"></canvas>
+                                        </span>
+                                        <h6>10%</h6>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 border-left text-center p-t-10">
+                                    <h3 class="mb-0 font-weight-bold">150</h3>
+                                    <span class="text-muted">New Users</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="card m-t-0">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="peity_bar_bad left text-center m-t-10">
+                                        <span>
+                                            <span style="display: none;">3,5,6,16,8,10,6</span>
+                                            <canvas width="50" height="24"></canvas>
+                                        </span>
+                                        <h6>-40%</h6>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 border-left text-center p-t-10">
+                                    <h3 class="mb-0 font-weight-bold">4560</h3>
+                                    <span class="text-muted">Orders</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="card m-t-0">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="peity_line_good left text-center m-t-10">
+                                        <span>
+                                            <span style="display: none;">12,6,9,23,14,10,17</span>
+                                            <canvas width="50" height="24"></canvas>
+                                        </span>
+                                        <h6>+60%</h6>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 border-left text-center p-t-10">
+                                    <h3 class="mb-0 ">5672</h3>
+                                    <span class="text-muted">Active Users</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="card m-t-0">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="peity_bar_good left text-center m-t-10">
+                                        <span>12,6,9,23,14,10,13</span>
+                                        <h6>+30%</h6>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 border-left text-center p-t-10">
+                                    <h3 class="mb-0 font-weight-bold">2560</h3>
+                                    <span class="text-muted">Register</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Line Chart</h5>
+                                <div class="flot-chart">
+                                    <div class="flot-chart-content" id="flot-line-chart"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Pie Chart</h5>
+                                <div class="pie" style="height: 400px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Bar Chart</h5>
+                                <div class="bars" style="height: 400px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <footer class="footer text-center">
+            Copyright © 2018 by <a href="https://github.com/apleek3/projectdeux">These Guys</a>.
+        </footer>
+
+    </div>
+
+    <script src="../public/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="../public/assets/libs/popper.js/dist/umd/popper.min.js"></script>
+    <script src="../public/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../public/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="../public/assets/libs/sparkline/sparkline.js"></script>
+    <script src="../public/assets/dist/js/waves.js"></script>
+    <script src="../public/assets/dist/js/sidebarmenu.js"></script>
+    <script src="../public/assets/dist/js/custom.min.js"></script>
+    <script src="../public/assets/libs/chart/matrix.interface.js"></script>
+    <script src="../public/assets/libs/chart/excanvas.min.js"></script>
+    <script src="../public/assets/libs/flot/jquery.flot.js"></script>
+    <script src="../public/assets/libs/flot/jquery.flot.pie.js"></script>
+    <script src="../public/assets/libs/flot/jquery.flot.time.js"></script>
+    <script src="../public/assets/libs/flot/jquery.flot.stack.js"></script>
+    <script src="../public/assets/libs/flot/jquery.flot.crosshair.js"></script>
+    <script src="../public/assets/libs/chart/jquery.peity.min.js"></script>
+    <script src="../public/assets/libs/chart/matrix.charts.js"></script>
+    <script src="../public/assets/libs/chart/jquery.flot.pie.min.js"></script>
+    <script src="../public/assets/libs/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>
+    <script src="../public/assets/libs/chart/turning-series.js"></script>
+    <script src="../public/assets/dist/js/pages/chart/chart-page-init.js"></script>
+
+</body>
+
+</html>
