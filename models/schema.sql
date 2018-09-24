@@ -1,5 +1,0 @@
-DROP DATABASE IF EXISTS battleshipdb;
-CREATE DATABASE battleshipdb;
-
-DROP DATABASE IF EXISTS testdb;
-CREATE DATABASE testdb;
