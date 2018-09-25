@@ -27,6 +27,10 @@ module.exports = function(app) {
     res.sendFile(path.join(__dirname, "../views/battleship.html"));
   });
 
+  app.get("/game", function(req, res) {
+    res.sendFile(path.join(__dirname, "../views/game.html"));
+  });
+
   // users route loads user-manager.html
   app.get("/users", function(req, res) {
     res.sendFile(path.join(__dirname, "../views/user-manager.html"));
