@@ -31,9 +31,34 @@ module.exports = function(app) {
     res.sendFile(path.join(__dirname, "../views/game.html"));
   });
 
+  app.get("/leaderboard", function(req, res) {
+    res.sendFile(path.join(__dirname, "../views/leaderboard.html"));
+  });
+
+  app.get("/rules", function(req, res) {
+    res.sendFile(path.join(__dirname, "../views/rules.html"));
+  });
+
+  app.get("/statistics", function(req, res) {
+    res.sendFile(path.join(__dirname, "../views/statistics.html"));
+  });
+
+  app.get("/index", function(req, res) {
+    res.sendFile(path.join(__dirname, "../views/index.html"));
+  });
+
+  app.get("/authentication-login", function(req, res) {
+    res.sendFile(path.join(__dirname, "../views/authentication-login.html"));
+  });
+
+  app.get("/authentication-register", function(req, res) {
+    res.sendFile(path.join(__dirname, "../views/authentication-register.html"));
+  });
+
   // users route loads user-manager.html
   app.get("/users", function(req, res) {
     res.sendFile(path.join(__dirname, "../views/user-manager.html"));
   });
 
 };
+
