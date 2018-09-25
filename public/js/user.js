@@ -1,6 +1,7 @@
 $(document).ready(function() {
   // Getting references to the name input and user container, as well as the table body
   var nameInput = $("#user-name");
+  var emailInput = $("#email");
   var userList = $("tbody");
   var userContainer = $(".user-container");
   // Adding event listeners to the form to create a new object, and the button to delete
@@ -15,14 +16,14 @@ $(document).ready(function() {
   function handleUserFormSubmit(event) {
     event.preventDefault();
     // Don't do anything if the name fields hasn't been filled out
-    if (!nameInput.val().trim().trim()) {
+    if (!nameInput.val().trim().trim() && (!emailInput.val().trim().trim())) {
+      alert("PLEASE ENTER YOUR NAME AND EMAIL");
       return;
     }
     // Calling the upsertUser function and passing in the value of the name input
     upsertUser({
-      name: nameInput
-        .val()
-        .trim()
+      name: nameInput.val().trim(),
+      email: emailInput.val().trim()
     });
   }
 
@@ -53,6 +54,7 @@ $(document).ready(function() {
       }
       renderUserList(rowsToAdd);
       nameInput.val("");
+      emailInput.val("");
     });
   }
 
