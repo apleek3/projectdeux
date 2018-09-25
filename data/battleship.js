@@ -1,3 +1,14 @@
+var admin = require("firebase-admin");
+
+var serviceAccount = require("../battleship-167f9-firebase-adminsdk-noo5b-b3471d47a0.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://battleship-167f9.firebaseio.com"
+});
+
+var db = admin.database();
+
 //***************
 //              *
 // CONSTRUCTORS *
@@ -217,6 +228,15 @@ player2.boats.forEach(function(boat) {
     continue;
   }
 });
+var id = 1;
+var GameData = function(player1, player2) {
+  this.playerBoats = player1.allBoatCoords;
+  this.cpuBoats = player2.allBoatCoords;
+  this.id = id;
+  id++;
+};
+
+db.ref("games/" + id).push(new GameData(player1, player2));
 
 //making guesses
 var winner = false;
@@ -260,9 +280,9 @@ var rngGuess = function() {
 };
 
 //simulate game running with 2 players guessing randomly until a winner is found, limit 100 turns.
-var i = 0;
-while (i < 100) {
-  playTurn(rngIndex());
-  i++;
-}
-console.log(player1);
+// var i = 0;
+// while (i < 100) {
+//   playTurn(rngIndex());
+//   i++;
+// }
+// console.log(player1);
