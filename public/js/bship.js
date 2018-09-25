@@ -1,3 +1,14 @@
+// Initialize Firebase
+var config = {
+  apiKey: "AIzaSyCcrKJgxnJp0SkukTc1HhI-dkxMfX3jT2s",
+  authDomain: "battleship-167f9.firebaseapp.com",
+  databaseURL: "https://battleship-167f9.firebaseio.com",
+  projectId: "battleship-167f9",
+  storageBucket: "battleship-167f9.appspot.com",
+  messagingSenderId: "167042498206"
+};
+firebase.initializeApp(config);
+var db = firebase.database();
 /**
  * @desc executes the jQuery append function multiple times with a single jQuery object.
  * @param {object} appThis jQuery object with content to append
@@ -15,7 +26,7 @@ function appendMultiple(appThis, appTo, num) {
  */
 function numArr(num) {
   var arr = Array(num).fill("");
-  arr.forEach(function(e, i, a) {
+  arr.forEach(function (e, i, a) {
     a[i] += 1 + i;
   });
   return arr;
@@ -31,8 +42,9 @@ function alphArr(num) {
  * @description Generates a game board in the form of a div. Works in conjunction with css file and uses the CSS Grid Layout. Coordines are applied to each play area square as data-coord.
  * @param {number} rows number of rows on the game board play area
  * @param {number} cols number of columnss on the game board play area
+ * @param {string} player the owner of the board (cpu or human player)
  */
-function generateBoard(rows, cols) {
+function generateBoard(rows, cols, player) {
   var colArr = numArr(cols);
   var rowArr = alphArr(rows);
   var board = $("<div>").addClass("board");
@@ -46,69 +58,119 @@ function generateBoard(rows, cols) {
     board.append(rowLabelSquare.clone());
     appendMultiple(playSquare, board, 10);
   }
-  board.find(".col-label").each(function(index) {
+  board.find(".col-label").each(function (index) {
     $(this).append($("<p>").text(colArr[index]));
   });
-  board.find(".row-label").each(function(index) {
+  board.find(".row-label").each(function (index) {
     $(this).append($("<p>").text(rowArr[index]));
   });
-  board.find(".play-square").each(function(index) {
-    var numCoord = colArr[Math.floor(index / 10)];
-    var abcCoord = rowArr[index % 10];
+  board.find(".play-square").each(function (index) {
+    var abcCoord = rowArr[Math.floor(index / 10)];
+    var numCoord = colArr[index % 10];
     this.setAttribute("data-coord", abcCoord + numCoord);
-
-    $(this).on("click", function() {
+    this.setAttribute("data-player", player);
+    $(this).on("click", function () {
       if (boat) {
         console.log("boat!");
       }
-      //TODO: communicate with database via post request or firebase connection
-      // $.post("/api/"+this.dataset.coord, function(res) {
-      //     console.log(res);
-      // });
     });
   });
   return board;
 }
 var boat = false;
 var boatLength = 4;
-$(document).ready(function() {
-  //everything below this is pretty rough.
-  $("body").append(generateBoard(10, 10));
-  var btn = $("<button type='button' class='btn btn-primary'>").text("button");
-  btn.on("click", function() {
-    boat = !boat;
+var gameID;
+var playerTurn = true;
+var guesses = [];
+var cpuGuesses = [];
+var hits = 0;
+var cpuHits = 0;
+var rngGuess = function () {
+  return alphArr(10)[Math.floor(Math.random() * 10)] + numArr(10)[Math.floor(Math.random() * 10)];
+}
+var cpuTurn = function () {
+  var guess = rngGuess();
+  if (cpuGuesses.includes(guess)) {
+    cpuTurn();
+  } else {
+    cpuGuesses.push(guess);
+    db.ref("games/" + gameID + "/data/guesses/cpu").set(cpuGuesses);
+  }
+}
+
+$(document).ready(function () {
+  var attackHistory = $("<div>").css({
+    //TODO: make the attack history div look better
+    //TODO: append shots to the msg-div
   });
-  var div = $("<div>").addClass("button-div");
-  div.append(btn);
-  $("body").append(div);
-  $(".play-square").hover(function(e) {
-    var arr = $(".play-square");
-    var index = arr.index(this);
-    if (boat) {
-      if (index < 100 - (boatLength - 1) * 10) {
-        arr = arr.slice(index, index + 40);
-        arr.splice(1, 9);
-        arr.splice(2, 9);
-        arr.splice(3, 9);
-        arr.splice(4, 9);
-        $(arr).css("background-color", function() {
-          if (e.type === "mouseenter") {
-            return "rgb(30,30,150,0.4)";
-          } else if (e.type === "mouseleave") {
-            return "lightgray";
+  attackHistory.addClass("history-box");
+  $("#game-area-player").append(generateBoard(10, 10, "player"));
+  $("#game-area-msg").append(attackHistory);
+  $("#game-area-cpu").append(generateBoard(10, 10, "cpu"));
+  $.post("./new/game", function (data) {
+    gameID = data.id;
+    data.boats.forEach(function (e) {
+      $("[data-coord=" + e + "][data-player=player]").css("background-color", "rgba(30,30,30,0.4)");
+    });
+    db.ref("games/" + gameID + "/data/guesses/cpu").set(cpuGuesses);
+    db.ref("/games/" + gameID).on("value", function (snapshot) {
+      var arr = snapshot.val();
+      if (arr.data.guesses) {
+        var guess = arr.data.guesses.player[arr.data.guesses.player.length - 1];
+        if (arr.data.cpuBoats.includes(guess)) {
+          //hit
+          $("[data-coord=" + guess + "][data-player=cpu]").css("background-color", "rgba(100,40,40,0.6)");
+          hits++;
+          console.log(hits);
+          if (hits===34) {
+            alert("you win :)");
           }
-        });
+          playerTurn = !playerTurn;
+          if (!playerTurn) {
+            cpuTurn();
+          }
+        } else {
+          //miss
+          $("[data-coord=" + guess + "][data-player=cpu]").css("background-color", "rgba(10,10,10,0.8)");
+          playerTurn = !playerTurn;
+          if (!playerTurn) {
+            cpuTurn();
+          }
+        }
+        if (arr.data.guesses.cpu) {
+          var cpuGuess = arr.data.guesses.cpu[arr.data.guesses.cpu.length - 1];
+          if (arr.data.playerBoats.includes(cpuGuess)) {
+            //hit
+            cpuHits++;
+            if(cpuHits===34) {
+              alert("you lose :(");
+            }
+            $("[data-coord=" + cpuGuess + "][data-player=player]").css("background-color", "rgba(100,40,40,0.6)");
+          } else {
+            //miss
+            $("[data-coord=" + cpuGuess + "][data-player=player]").css("background-color", "rgba(10,10,10,0.8)");
+          }
+        }
       }
+    });
+  });
+
+  $("#game-area-cpu").on("click", ".play-square", function () {
+    if (guesses.includes(this.dataset.coord)) {
+      console.log(this.dataset.coord + " already guessed that");
     } else {
-      if (index % 10 <= 10 - boatLength) {
-        $(arr.slice(index, index + 4)).css("background-color", function() {
-          if (e.type === "mouseenter") {
-            return "rgb(30,30,150,0.4)";
-          } else if (e.type === "mouseleave") {
-            return "lightgray";
-          }
-        });
-      }
+      guesses.push(this.dataset.coord);
+      db.ref("games/" + gameID + "/data/guesses/player").set(guesses);
     }
   });
+
+  //TODO: improve win screen
+  //TODO: simple cpu AI
+
+
+
+
+
+  //everything below this is pretty rough.
+
 });
