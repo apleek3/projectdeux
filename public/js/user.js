@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
   // Getting references to the name input and user container, as well as the table body
   var nameInput = $("#user-name");
   var emailInput = $("#email");
@@ -8,6 +8,10 @@ $(document).ready(function() {
   // an User
   $(document).on("submit", "#user-form", handleUserFormSubmit);
   $(document).on("click", ".delete-user", handleDeleteButtonPress);
+
+
+
+
 
   // Getting the initial list of Users
   getUsers();
@@ -47,7 +51,7 @@ $(document).ready(function() {
 
   // Function for retrieving users and getting them ready to be rendered to the page
   function getUsers() {
-    $.get("/api/users", function(data) {
+    $.get("/api/users", function (data) {
       var rowsToAdd = [];
       for (var i = 0; i < data.length; i++) {
         rowsToAdd.push(createUserRow(data[i]));
@@ -89,4 +93,5 @@ $(document).ready(function() {
     })
       .then(getUsers);
   }
+
 });
