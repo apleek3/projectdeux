@@ -1,14 +1,3 @@
-var admin = require("firebase-admin");
-
-var serviceAccount = require("../battleship-167f9-firebase-adminsdk-noo5b-b3471d47a0.json");
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://battleship-167f9.firebaseio.com"
-});
-
-var db = admin.database();
-
 //***************
 //              *
 // CONSTRUCTORS *
@@ -22,14 +11,14 @@ var db = admin.database();
  * @param {array} board
  * @param {array} guesses
  */
-var Player = function(name, boats, board, guesses) {
+var Player = function (name, boats, board, guesses) {
   this.name = name || "player";
   this.boats = boats || defaultBoats();
   this.allBoatCoords = [];
   this.board = board || createBoard(10, 10);
   this.guesses = guesses || [];
   this.validGuessCoords = [];
-  this.placeBoat = function(boat, index) {
+  this.placeBoat = function (boat, index) {
     var board = this.board;
     var row = index.row;
     var col = index.col;
@@ -63,7 +52,7 @@ var Player = function(name, boats, board, guesses) {
       return true;
     }
   };
-  this.checkGuess = function(index, board) {
+  this.checkGuess = function (index, board) {
     var row = index.row;
     var col = index.col;
     var hit = false;
@@ -101,8 +90,7 @@ var Player = function(name, boats, board, guesses) {
       return false;
     }
   };
-
-  this.makeGuess = function(index, board, hit) {
+  this.makeGuess = function (index, board, hit) {
     //only checks for hit/miss since checkGuess already does the bulk of it
     var row = index.row;
     var col = index.col;
@@ -127,13 +115,30 @@ var Player = function(name, boats, board, guesses) {
  * @param {boolean} orientation Boat orientation. 0 is horizontal, 1 is vertical.
  * @param {array} coord Boat coordinates. Stored as array of strings e.g. ["a1","a2","a3"]
  */
-var Boat = function(length, name, abbr, orientation, coord) {
+var Boat = function (length, name, abbr, orientation, coord) {
   this.length = length;
   this.name = name;
   this.abbr = abbr;
   this.orientation = orientation || 0;
   this.coord = coord || Array(length);
   this.isSunk = false;
+};
+
+var gameData = function (player1, player2) {
+  player1.boats.forEach(function (boat) {
+    while (!player1.placeBoat(boat, rngIndex())) {
+      continue;
+    }
+  });
+  player2.boats.forEach(function (boat) {
+    while (!player2.placeBoat(boat, rngIndex())) {
+      continue;
+    }
+  });
+  return {
+    playerBoats: player1.allBoatCoords,
+    cpuBoats: player2.allBoatCoords
+  }
 };
 
 // ********************
@@ -147,7 +152,7 @@ var Boat = function(length, name, abbr, orientation, coord) {
  * @param {number} rows Number of rows in the array
  * @param {number} cols Number of columns in the array
  */
-var createBoard = function(rows, cols) {
+var createBoard = function (rows, cols) {
   var board = Array(rows);
   for (var col = 0; col < cols; col++) {
     board[col] = Array(cols).fill(null);
@@ -160,7 +165,7 @@ var createBoard = function(rows, cols) {
  * @param {string} coord Coordinates to translate, in the form of of string i.e. single letter (default a-j), single number (defualt 1-10).
  * @returns {object} index object with properties row and col.
  */
-var coordToIndex = function(coord) {
+var coordToIndex = function (coord) {
   if (coord) {
     var rowArr = "abcdefghijklmnopqrstuvwxyz".split("");
     var alpha = coord.charAt(0);
@@ -171,7 +176,6 @@ var coordToIndex = function(coord) {
     };
   }
 };
-console.log(coordToIndex("c5"));
 
 /**
  * @name indexToCoord
@@ -179,7 +183,7 @@ console.log(coordToIndex("c5"));
  * @param {object} index index object in the form {row: row, col: col}
  * @returns {string} coordinates translated from the index in form of string i.e. single letter single number e.g. "b5"
  */
-var indexToCoord = function(index) {
+var indexToCoord = function (index) {
   var rowArr = "abcdefghijklmnopqrstuvwxyz".split("");
   var alpha = rowArr[index.row];
   var num = parseInt(index.col) + 1;
@@ -191,7 +195,7 @@ var indexToCoord = function(index) {
  * @description generates random numerical coordinates
  * @returns {object} random index object in the form {row: row, col: col}
  */
-var rngIndex = function() {
+var rngIndex = function () {
   var row = Math.floor(Math.random() * 10);
   var col = Math.floor(Math.random() * 10);
   return { row: row, col: col };
@@ -202,7 +206,7 @@ var rngIndex = function() {
  * @description generates default array of boats as used in original battleship game
  * @returns {array} array of 5 boats: Aircraft Carrier "A" length: 5, etc.
  */
-var defaultBoats = function() {
+var defaultBoats = function () {
   return [
     new Boat(5, "Aircraft Carrier", "A", Math.floor(Math.random() * 2)),
     new Boat(4, "Battleship", "B", Math.floor(Math.random() * 2)),
@@ -211,36 +215,46 @@ var defaultBoats = function() {
     new Boat(2, "Destroyer", "D", Math.floor(Math.random() * 2))
   ];
 };
+
 //SIMULATION//
 
 //player creation
-var player1 = new Player("phil");
+var player1 = new Player("player");
 var player2 = new Player("cpu");
 
 //placing boats pregame
-player1.boats.forEach(function(boat) {
+player1.boats.forEach(function (boat) {
   while (!player1.placeBoat(boat, rngIndex())) {
     continue;
   }
 });
-player2.boats.forEach(function(boat) {
+player2.boats.forEach(function (boat) {
   while (!player2.placeBoat(boat, rngIndex())) {
     continue;
   }
 });
-var id = 1;
-var GameData = function(player1, player2) {
-  this.playerBoats = player1.allBoatCoords;
-  this.cpuBoats = player2.allBoatCoords;
-  this.id = id;
-  id++;
-};
 
-db.ref("games/" + id).push(new GameData(player1, player2));
+var battleshipGame = {
+  constructors: {
+    Player: Player,
+    Boat: Boat
+  },
+  methods: {
+    gameData: gameData,
+    createBoard: createBoard,
+    coordToIndex: coordToIndex,
+    indexToCoord: indexToCoord,
+    rngIndex: rngIndex,
+    rngGuess: rngGuess,
+    defaultBoats: defaultBoats
+  }
+}
+
+module.exports = battleshipGame;
 
 //making guesses
 var winner = false;
-var playTurn = function(input) {
+var playTurn = function (input) {
   //This function takes an input, but if it is invalid it recurses with a random guess. In the future it may be useful
   //to separate the player and cpu turn in order to recurse or prematurely end the player turn when an invalid guess is
   //made so the game can prompt the user for more input.
@@ -251,7 +265,7 @@ var playTurn = function(input) {
   if (!guess) {
     playTurn(rngIndex());
   } else if (guess.hit) {
-    var winCondition1 = player2.allBoatCoords.every(function(elem) {
+    var winCondition1 = player2.allBoatCoords.every(function (elem) {
       return player1.validGuessCoords.indexOf(elem) > -1;
     });
     if (winCondition1) {
@@ -261,7 +275,7 @@ var playTurn = function(input) {
   }
   var cpuGuess = rngGuess();
   if (cpuGuess.hit) {
-    var winCondition2 = player1.allBoatCoords.every(function(elem) {
+    var winCondition2 = player1.allBoatCoords.every(function (elem) {
       return player2.validGuessCoords.indexOf(elem) > -1;
     });
     if (winCondition2) {
@@ -270,7 +284,7 @@ var playTurn = function(input) {
     }
   }
 };
-var rngGuess = function() {
+var rngGuess = function () {
   var guess = player2.checkGuess(rngIndex(), player1.board);
   if (guess.invalid) {
     guess = rngGuess();
