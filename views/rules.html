@@ -30,7 +30,7 @@
                     <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)">
                         <i class="ti-menu ti-close"></i>
                     </a>
-                    <a class="navbar-brand" href="/game">
+                    <a class="navbar-brand" href="game.html">
                         <b class="logo-icon p-l-10">
                             <img src="./assets/images/logo-icon.png" alt="homepage" class="light-logo" />
                         </b>
@@ -38,7 +38,9 @@
                             <img src="./assets/images/logo-text.png" alt="homepage" class="light-logo" />
                         </span>
                     </a>
-                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)"
+                        data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
                         <i class="ti-more"></i>
                     </a>
                 </div>
@@ -46,14 +48,17 @@
                 <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
                     <ul class="navbar-nav float-left mr-auto">
                         <li class="nav-item d-none d-md-block">
-                            <a class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)" data-sidebartype="mini-sidebar">
+                            <a class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)"
+                                data-sidebartype="mini-sidebar">
                                 <i class="mdi mdi-menu font-24"></i>
                             </a>
                         </li>
                     </ul>
-                    <ul class="navbar-nav float-right"><!-- This ul section is only needed if we want users to be able to sign in and out. Otherwise, delete. -->
+                    <ul class="navbar-nav float-right">
+                        <!-- This ul section is only needed if we want users to be able to sign in and out. Otherwise, delete. -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="javascript:void(0)"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img src="./assets/images/user.jpg" alt="user" class="rounded-circle" width="31">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right user-dd animated">
@@ -79,25 +84,28 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav" class="p-t-30">
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/game" aria-expanded="false">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="game.html" aria-expanded="false">
                                 <i class="fas fa-anchor"></i>
                                 <span class="hide-menu">New Battle</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/rules" aria-expanded="false">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="rules.html"
+                                aria-expanded="false">
                                 <i class="fas fa-book"></i>
                                 <span class="hide-menu">Rules of Engagement</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/leaderboard" aria-expanded="false">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="leaderboard.html"
+                                aria-expanded="false">
                                 <i class="fas fa-clipboard-list"></i>
                                 <span class="hide-menu">Leaderboard</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/statistics" aria-expanded="false">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="statistics.html"
+                                aria-expanded="false">
                                 <i class="fas fa-chart-bar"></i>
                                 <span class="hide-menu">Statistics</span>
                             </a>
@@ -123,11 +131,30 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Objective</h5>
+                                <h5 class="card-title">Mission Objective</h5>
                                 <div>
                                     <p>
-                                        Guess the hidden locations of your enemy's ships; sink all their ships before they sink yours.
-                                        The goal of the game is to sink all of the opponent's ships by correctly guessing their location on the grid.
+                                        Your objective is to sink all of your opponent's ships before they can sink all
+                                        of yours.
+                                    </p>
+                                    <p>
+                                        You and your opponent each have five ships:
+                                        <ul>
+                                            <li>Carrier (Five Hits)</li>
+                                            <li>Battleship (Four Hits)</li>
+                                            <li>Cruiser (Three Hits)</li>
+                                            <li>Submarine (Three Hits)</li>
+                                            <li>Destroyer (Two Hits)</li>
+                                        </ul>
+                                    </p>
+                                    <p>
+                                        All of your opponent's ships are somewhere on their ocean grid. You will try to
+                                        hit their ships by selecting coordinates on their grid to fire on. Your
+                                        opponent will also try to hit your ships by selecting coordinates on your grid.
+                                        Neither you nor your opponent can see each other's grid, so you must try to
+                                        guess where each other's ships are. Your display will have two ocean grids –
+                                        one to display your ship locations and your opponents shots, and one to record
+                                        your shots at your opponent’s grid.
                                     </p>
                                 </div>
                             </div>
@@ -137,30 +164,39 @@
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Ships</h5>
-                                <p>Each side has five ships, and each ship can take a certain number of hits.</p>
-                                <p>The five ships are:
+                                <h5 class="card-title">Before Starting a New Engagement</h5>
+                                <p>
+                                    You and your opponent will each position your 5 ships somewhere on your ocean
+                                    grids.
                                     <ul>
-                                        <li>Carrier - Five Hits</li>
-                                        <li>Battleship - Four Hits</li>
-                                        <li>Cruiser - Three Hits</li>
-                                        <li>Submarine - Three Hits</li>
-                                        <li>Destroyer - Two Hits</li>
+                                        <li>Ships can only be positioned vertically or horizontally.</li>
+                                        <li>Diagonal placement is not allowed.</li>
+                                        <li>No part of a ship may be off the edge of the grid.</li>
+                                        <li>Ships may not overlap each other.</li>
+                                        <li>No ships may be placed on another ship.</li>
+                                        <li><strong>Once the battle begins, ships may not be moved!</strong></li>
                                     </ul>
                                 </p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-md-6"><!-- I can add or delete sections here as needed. -->
+                    <div class="col-md-6">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Gameplay</h5>
+                                <h5 class="card-title">Once the Battle Commences</h5>
                                 <p>
-                                    The battlefield consists of two grids. One grid is used to hide your ships from your enemy. The other grid is used to record the shots fired toward your opponent, and to document whether those shots were hits or misses.
+                                    You and your opponent will take turns selecting coordinates to fire upon. Each shot
+                                    will be noted on your grid as a "hit" or "miss" as appropriate (red for hit, white
+                                    for miss).
                                 </p>
                                 <p>
-                                    Before the battle begins, each opponent secretly positions their own five ships on their own grid. Each ship must be placed horizontally or vertically — not diagonally — across grid spaces, and the ships can't hang off the grid. Ships can touch each other, but they can't occupy the same grid space. Ship positions cannot be changed once the battle has commenced.
+                                    When all of the coordinates that a ship occupies have been hit, the ship will be
+                                    sunk. You will be informed when you sink an opponent's ship, and they will be
+                                    informed when they sink one of yours.
+                                </p>
+                                <p>
+                                    Once all of one side's ships have been sunk, the battle is over.
                                 </p>
                             </div>
                         </div>
