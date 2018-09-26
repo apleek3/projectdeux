@@ -79,7 +79,6 @@ function generateBoard(rows, cols, player) {
 }
 var boat = false;
 var boatLength = 4;
-var gameID;
 var playerTurn = true;
 var guesses = [];
 var cpuGuesses = [];
@@ -107,51 +106,63 @@ $(document).ready(function () {
   $("#game-area-player").append(generateBoard(10, 10, "player"));
   $("#game-area-msg").append(attackHistory);
   $("#game-area-cpu").append(generateBoard(10, 10, "cpu"));
-  $.post("./new/game", function (data) {
-    gameID = data.id;
+
+  if (location.search) {
+    var queryURL = (location.search).split("&");
+    var gameID = queryURL[0].slice(queryURL[0].indexOf("=") + 1);
+    var user = queryURL[1].slice(queryURL[1].indexOf("=") + 1);
+  } else {
+    var user = "anon"
+    var gameID = Math.floor(Math.random()*10000);
+  }
+
+  $.post("./new/game", { gameID: gameID, user: user }, function (data) {
+    console.log(data);
     data.boats.forEach(function (e) {
       $("[data-coord=" + e + "][data-player=player]").css("background-color", "rgba(30,30,30,0.4)");
     });
-    db.ref("games/" + gameID + "/data/guesses/cpu").set(cpuGuesses);
-    db.ref("/games/" + gameID).on("value", function (snapshot) {
+
+    db.ref("/users/" + user + "/games/data/guesses/cpu").set(cpuGuesses);
+
+    db.ref("/users/" + user + "/games/data/guesses/player").on("value", function (snapshot) {
       var arr = snapshot.val();
-      if (arr.data.guesses) {
-        var guess = arr.data.guesses.player[arr.data.guesses.player.length - 1];
-        if (arr.data.cpuBoats.includes(guess)) {
-          //hit
-          $("[data-coord=" + guess + "][data-player=cpu]").css("background-color", "rgba(100,40,40,0.6)");
-          hits++;
-          console.log(hits);
-          if (hits===34) {
-            alert("you win :)");
-          }
-          playerTurn = !playerTurn;
-          if (!playerTurn) {
-            cpuTurn();
-          }
-        } else {
-          //miss
-          $("[data-coord=" + guess + "][data-player=cpu]").css("background-color", "rgba(10,10,10,0.8)");
-          playerTurn = !playerTurn;
-          if (!playerTurn) {
-            cpuTurn();
-          }
-        }
-        if (arr.data.guesses.cpu) {
-          var cpuGuess = arr.data.guesses.cpu[arr.data.guesses.cpu.length - 1];
-          if (arr.data.playerBoats.includes(cpuGuess)) {
-            //hit
-            cpuHits++;
-            if(cpuHits===34) {
-              alert("you lose :(");
-            }
-            $("[data-coord=" + cpuGuess + "][data-player=player]").css("background-color", "rgba(100,40,40,0.6)");
-          } else {
-            //miss
-            $("[data-coord=" + cpuGuess + "][data-player=player]").css("background-color", "rgba(10,10,10,0.8)");
-          }
-        }
-      }
+      // if (arr.data.guesses) {
+      //   var guess = arr.data.guesses.player[arr.data.guesses.player.length - 1];
+      //   if (arr.data.cpuBoats.includes(guess)) {
+      //     //hit
+      //     $("[data-coord=" + guess + "][data-player=cpu]").css("background-color", "rgba(100,40,40,0.6)");
+      //     hits++;
+      //     console.log(hits);
+      //     if (hits === 34) {
+      //       alert("you win :)");
+      //     }
+      //     playerTurn = !playerTurn;
+      //     if (!playerTurn) {
+      //       cpuTurn();
+      //     }
+      //   } else {
+      //     //miss
+      //     $("[data-coord=" + guess + "][data-player=cpu]").css("background-color", "rgba(10,10,10,0.8)");
+      //     playerTurn = !playerTurn;
+      //     if (!playerTurn) {
+      //       cpuTurn();
+      //     }
+      //   }
+      //   if (arr.data.guesses.cpu) {
+      //     var cpuGuess = arr.data.guesses.cpu[arr.data.guesses.cpu.length - 1];
+      //     if (arr.data.playerBoats.includes(cpuGuess)) {
+      //       //hit
+      //       cpuHits++;
+      //       if (cpuHits === 34) {
+      //         alert("you lose :(");
+      //       }
+      //       $("[data-coord=" + cpuGuess + "][data-player=player]").css("background-color", "rgba(100,40,40,0.6)");
+      //     } else {
+      //       //miss
+      //       $("[data-coord=" + cpuGuess + "][data-player=player]").css("background-color", "rgba(10,10,10,0.8)");
+      //     }
+      //   }
+      // }
     });
   });
 
@@ -160,7 +171,7 @@ $(document).ready(function () {
       console.log(this.dataset.coord + " already guessed that");
     } else {
       guesses.push(this.dataset.coord);
-      db.ref("games/" + gameID + "/data/guesses/player").set(guesses);
+      db.ref("users/" + user + "/games/data/guesses/player").set(guesses);
     }
   });
 
