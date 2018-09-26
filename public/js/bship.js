@@ -189,19 +189,16 @@ $(document).ready(function () {
               $("#game-area-cpu").off("click", ".play-square");
               db.ref(gameRef + "/winner/").set("player");
               db.ref(gameRef).once("value", function (snapshot) {
-                console.log(snapshot.val());
-                $.ajax({
-                  method: "put",
-                  url: "/api/games/",
-                  data:
-                  {
-                    id: user,
+                var gameData = snapshot.val();
+                if (user !== "anon") {
+                  $.post("/api/games", {
                     title: "game_" + gameID,
-                    body: JSON.stringify(snapshot.val())
-                  }
-                }).done(function () {
-                  console.log("game logged");
-                });
+                    body: JSON.stringify(gameData),
+                    UserId: user
+                  }, function (data) {
+                    console.log(data);
+                  });
+                }
               });
             }
           } else {
@@ -225,7 +222,16 @@ $(document).ready(function () {
               $("#game-area-cpu").off("click", ".play-square");
               db.ref(gameRef + "/winner/").set("cpu");
               db.ref(gameRef).once("value", function (snapshot) {
-                console.log(snapshot.val());
+                var gameData = snapshot.val();
+                if (user !== "anon") {
+                  $.post("/api/games", {
+                    title: "game_" + gameID,
+                    body: JSON.stringify(gameData),
+                    UserId: user
+                  }, function (data) {
+                    console.log(data);
+                  });
+                }
               });
             }
           } else {
