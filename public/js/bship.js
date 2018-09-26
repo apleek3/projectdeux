@@ -250,28 +250,6 @@ $(document).ready(function () {
 
   });
 
-  // Gets game data for the current game if we're editing, or if we're adding to an user's existing games
-  function getScores() {
-    $.get("/api/scores", renderScoreList);
-  }
-  // Function to either render a list of users, or if there are none, direct the user to the page
-  // to create an user first
-  function renderScoreList(data) {
-    if (!data.length) {
-      window.location.href = "/scores";
-    }
-     var rowsToAdd = [];
-    for (var i = 0; i < data.length; i++) {
-      rowsToAdd.push(createScoreRow(data[i]));
-    }
-    scoreSelect.empty();
-    console.log(rowsToAdd);
-    console.log(userSelect);
-    scoreSelect.append(rowsToAdd);
-
-  }
-
-  getScores();
 
   //TODO: improve win screen
   //TODO: simple cpu AI

@@ -2,15 +2,13 @@ module.exports = function(sequelize, DataTypes) {
   var Game = sequelize.define("Game", {
     title: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [1]
-      }
+      allowNull: true,
+      defaultValue: ""
     },
     body: {
       type: DataTypes.TEXT,
-      allowNull: false,
-      len: [1]
+      allowNull: true,
+      defaultValue: ""
     }
   });
 

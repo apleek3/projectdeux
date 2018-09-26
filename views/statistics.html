@@ -124,126 +124,120 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Placeholder</h5>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                </p>
-                                <p>
-                                    Enjoy these currently meaningless charts that we might use for something:
-                                </p>
+
+                                <div class="row">
+
+                                    <div class="col-md-6 text-center">
+
+                                        <br>
+                                        <img src="../public/assets/images/user.jpg" alt="user" class="rounded-circle" width="140">
+                                        <br><br>
+                                        <h4 class="card-title"><strong>Username</strong></h4>
+                                        <br><hr><br>
+
+                                        <div class="row">
+
+                                            <div class="col-md-6">
+                                                <div class="card m-t-0">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="peity_line_neutral left text-center m-t-10">
+                                                                <span>
+                                                                    <span style="display: none;">10,15,8,14,13,10,10</span>
+                                                                    <canvas width="50" height="24"></canvas>
+                                                                </span>
+                                                                <h6>10%</h6>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 border-left text-center p-t-10">
+                                                            <h3 class="mb-0 font-weight-bold">150</h3>
+                                                            <span class="text-muted">Losses</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="card m-t-0">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="peity_bar_bad left text-center m-t-10">
+                                                                <span>
+                                                                    <span style="display: none;">3,5,6,16,8,10,6</span>
+                                                                    <canvas width="50" height="24"></canvas>
+                                                                </span>
+                                                                <h6>-40%</h6>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 border-left text-center p-t-10">
+                                                            <h3 class="mb-0 font-weight-bold">4560</h3>
+                                                            <span class="text-muted">Misses</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <br>
+
+                                        <div class="row">
+
+                                            <div class="col-md-6">
+                                                <div class="card m-t-0">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="peity_line_good left text-center m-t-10">
+                                                                <span>
+                                                                    <span style="display: none;">12,6,9,23,14,10,17</span>
+                                                                    <canvas width="50" height="24"></canvas>
+                                                                </span>
+                                                                <h6>+60%</h6>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 border-left text-center p-t-10">
+                                                            <h3 class="mb-0 ">5672</h3>
+                                                            <span class="text-muted">Wins</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="card m-t-0">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="peity_bar_good left text-center m-t-10">
+                                                                <span>12,6,9,23,14,10,13</span>
+                                                                <h6>+30%</h6>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 border-left text-center p-t-10">
+                                                            <h3 class="mb-0 font-weight-bold">2560</h3>
+                                                            <span class="text-muted">Hits</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-6 text-center">
+                                        <div class="pie" style="height: 400px;"></div>
+                                        <br>
+                                        <h5>Pie Chart Title</h5>
+                                    </div>
+
+                                </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Real Time Chart</h5>
-                                <div id="real-time" style="height:400px;"></div>
-                                <p>Time between updates:
-                                    <input id="updateInterval" type="text" value="" style="text-align: right; width:5em"> milliseconds
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Turning-series chart</h5>
-                                <div id="placeholder" style="height: 400px;"></div>
-                                <p id="choices" class="m-t-20"></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-
-                    <div class="col-md-3">
-                        <div class="card m-t-0">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="peity_line_neutral left text-center m-t-10">
-                                        <span>
-                                            <span style="display: none;">10,15,8,14,13,10,10</span>
-                                            <canvas width="50" height="24"></canvas>
-                                        </span>
-                                        <h6>10%</h6>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 border-left text-center p-t-10">
-                                    <h3 class="mb-0 font-weight-bold">150</h3>
-                                    <span class="text-muted">New Users</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <div class="card m-t-0">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="peity_bar_bad left text-center m-t-10">
-                                        <span>
-                                            <span style="display: none;">3,5,6,16,8,10,6</span>
-                                            <canvas width="50" height="24"></canvas>
-                                        </span>
-                                        <h6>-40%</h6>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 border-left text-center p-t-10">
-                                    <h3 class="mb-0 font-weight-bold">4560</h3>
-                                    <span class="text-muted">Orders</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <div class="card m-t-0">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="peity_line_good left text-center m-t-10">
-                                        <span>
-                                            <span style="display: none;">12,6,9,23,14,10,17</span>
-                                            <canvas width="50" height="24"></canvas>
-                                        </span>
-                                        <h6>+60%</h6>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 border-left text-center p-t-10">
-                                    <h3 class="mb-0 ">5672</h3>
-                                    <span class="text-muted">Active Users</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <div class="card m-t-0">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="peity_bar_good left text-center m-t-10">
-                                        <span>12,6,9,23,14,10,13</span>
-                                        <h6>+30%</h6>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 border-left text-center p-t-10">
-                                    <h3 class="mb-0 font-weight-bold">2560</h3>
-                                    <span class="text-muted">Register</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-body">
@@ -254,26 +248,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Pie Chart</h5>
-                                <div class="pie" style="height: 400px;"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Bar Chart</h5>
-                                <div class="bars" style="height: 400px;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </div> -->
 
             </div>
 
