@@ -13,22 +13,26 @@ admin.initializeApp({
 var db = admin.database();
 var path = require("path");
 var battleship = require("../app/battleship.js");
-var id = 0;
 // Routes
 // =============================================================
 module.exports = function (app) {
     app.post("/new/game", function (req, res) {
+        if (req.body) {
+            console.log(req.body);
+            var id = req.body.id;
+        } else {
+            var id = "anon";
+        }
         var player1 = new battleship.constructors.Player("player");
         var player2 = new battleship.constructors.Player("cpu");
         var newGame = battleship.methods.gameData(player1, player2);
-        db.ref("games/"+id).set({
+        db.ref("users" + id + "/games").set({
             data: newGame
         });
         res.send({
             id: id,
             boats: newGame.playerBoats
         });
-        id++;
     });
 
 };
