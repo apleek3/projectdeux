@@ -4,6 +4,9 @@
 // ******************************************************************************
 // *** Dependencies
 // =============================================================
+ // Read and set environment variables
+ require("dotenv").config();
+
 var express = require("express");
 var bodyParser = require("body-parser");
 
