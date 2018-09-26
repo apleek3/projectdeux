@@ -1,7 +1,7 @@
 $(document).ready(function() {
   // Getting jQuery references to the game body, title, form, and user select
-  var bodyInput = $("#body");
-  var titleInput = $("#title");
+  // var bodyInput = $("#body");
+  // var titleInput = $("#title");
   var cmsForm = $("#cms");
   var userSelect = $("#user");
   // Adding an event listener for when the form is submitted
@@ -31,17 +31,20 @@ $(document).ready(function() {
   function handleFormSubmit(event) {
     event.preventDefault();
     // Wont submit the game if we are missing a body, title, or user
-    if (!titleInput.val().trim() || !bodyInput.val().trim() || !userSelect.val()) {
+    if (
+      //!titleInput.val().trim() || 
+      //!bodyInput.val().trim() || 
+      !userSelect.val()) {
       return;
     }
     // Constructing a newGame object to hand to the database
     var newGame = {
-      title: titleInput
-        .val()
-        .trim(),
-      body: bodyInput
-        .val()
-        .trim(),
+      // title: titleInput
+      //   .val()
+      //   .trim(),
+      // body: bodyInput
+      //   .val()
+      //   .trim(),
       UserId: userSelect.val()
     };
 
@@ -80,8 +83,8 @@ $(document).ready(function() {
       if (data) {
         console.log(data.UserId || data.id);
         // If this game exists, prefill our cms forms with its data
-        titleInput.val(data.title);
-        bodyInput.val(data.body);
+        // titleInput.val(data.title);
+        // bodyInput.val(data.body);
         userId = data.UserId || data.id;
         // If we have a game with this id, set a flag for us to know to update the game
         // when we hit submit
