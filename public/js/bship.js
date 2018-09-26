@@ -1,6 +1,6 @@
 // Initialize Firebase
 var config = {
-  apiKey: process.env.FIREBASE_API_KEY,
+  apiKey: "AIzaSyCcrKJgxnJp0SkukTc1HhI-dkxMfX3jT2s",
   authDomain: "battleship-167f9.firebaseapp.com",
   databaseURL: "https://battleship-167f9.firebaseio.com",
   projectId: "battleship-167f9",
@@ -186,6 +186,7 @@ $(document).ready(function () {
             $("[data-coord=" + guess + "][data-player=cpu]").css("background-color", "rgba(100,40,40,0.6)");
             if (snapshot.val().every(e => arr.indexOf(e) > -1)) {
               console.log("player wins!");
+              alert("PLAYER WINS!")
               $("#game-area-cpu").off("click", ".play-square");
               db.ref(gameRef + "/winner/").set("player");
               db.ref(gameRef).once("value", function (snapshot) {
@@ -219,6 +220,7 @@ $(document).ready(function () {
             $("[data-coord=" + guess + "][data-player=player]").css("background-color", "rgba(100,40,40,0.6)");
             if (snapshot.val().every(e => arr.indexOf(e) > -1)) {
               console.log("cpu wins!");
+              alert("CPU WINS!");
               $("#game-area-cpu").off("click", ".play-square");
               db.ref(gameRef + "/winner/").set("cpu");
               db.ref(gameRef).once("value", function (snapshot) {
@@ -248,7 +250,28 @@ $(document).ready(function () {
 
   });
 
+  // Gets game data for the current game if we're editing, or if we're adding to an user's existing games
+  function getScores() {
+    $.get("/api/scores", renderScoreList);
+  }
+  // Function to either render a list of users, or if there are none, direct the user to the page
+  // to create an user first
+  function renderScoreList(data) {
+    if (!data.length) {
+      window.location.href = "/scores";
+    }
+     var rowsToAdd = [];
+    for (var i = 0; i < data.length; i++) {
+      rowsToAdd.push(createScoreRow(data[i]));
+    }
+    scoreSelect.empty();
+    console.log(rowsToAdd);
+    console.log(userSelect);
+    scoreSelect.append(rowsToAdd);
 
+  }
+
+  getScores();
 
   //TODO: improve win screen
   //TODO: simple cpu AI
