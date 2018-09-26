@@ -1,6 +1,6 @@
 // Initialize Firebase
 var config = {
-  apiKey: "AIzaSyCcrKJgxnJp0SkukTc1HhI-dkxMfX3jT2s",
+  apiKey: process.env.FIREBASE_API_KEY,
   authDomain: "battleship-167f9.firebaseapp.com",
   databaseURL: "https://battleship-167f9.firebaseio.com",
   projectId: "battleship-167f9",

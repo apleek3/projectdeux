@@ -7,6 +7,7 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 
+require("dotenv").config();
 // Sets up the Express App
 // =============================================================
 var app = express();
@@ -37,5 +38,6 @@ require("./routes/game-routes")(app);
 db.sequelize.sync().then(function() {
   app.listen(PORT, function() {
     console.log("App listening on PORT " + PORT);
+    
   });
 });
