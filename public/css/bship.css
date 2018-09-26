@@ -27,7 +27,7 @@
 }
 
 #game-area-cpu .play-square:hover {
-    background-color: rgba(150, 20, 20, .3);
+    background-color: rgba(20, 20, 130, .3);
 }
 
 .board {

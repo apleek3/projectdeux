@@ -79,7 +79,6 @@ function generateBoard(rows, cols, player) {
 }
 var boat = false;
 var boatLength = 4;
-var gameID;
 var playerTurn = true;
 var guesses = [];
 var cpuGuesses = [];
@@ -88,13 +87,13 @@ var cpuHits = 0;
 var rngGuess = function () {
   return alphArr(10)[Math.floor(Math.random() * 10)] + numArr(10)[Math.floor(Math.random() * 10)];
 }
-var cpuTurn = function () {
+var cpuTurn = function (gameRef) {
   var guess = rngGuess();
   if (cpuGuesses.includes(guess)) {
-    cpuTurn();
+    cpuTurn(gameRef);
   } else {
     cpuGuesses.push(guess);
-    db.ref("games/" + gameID + "/data/guesses/cpu").set(cpuGuesses);
+    db.ref(gameRef + "/guesses/cpu").set(cpuGuesses);
   }
 }
 
@@ -107,62 +106,149 @@ $(document).ready(function () {
   $("#game-area-player").append(generateBoard(10, 10, "player"));
   $("#game-area-msg").append(attackHistory);
   $("#game-area-cpu").append(generateBoard(10, 10, "cpu"));
-  $.post("./new/game", function (data) {
-    gameID = data.id;
+
+  if (location.search) {
+    var queryURL = (location.search).split("&");
+    var gameID = queryURL[0].slice(queryURL[0].indexOf("=") + 1);
+    var user = queryURL[1].slice(queryURL[1].indexOf("=") + 1);
+  } else {
+    var user = "anon"
+    var gameID = Math.floor(Math.random() * 10000);
+  }
+
+  $.post("./new/game", { gameID: gameID, user: user }, function (data) {
     data.boats.forEach(function (e) {
       $("[data-coord=" + e + "][data-player=player]").css("background-color", "rgba(30,30,30,0.4)");
     });
-    db.ref("games/" + gameID + "/data/guesses/cpu").set(cpuGuesses);
-    db.ref("/games/" + gameID).on("value", function (snapshot) {
-      var arr = snapshot.val();
-      if (arr.data.guesses) {
-        var guess = arr.data.guesses.player[arr.data.guesses.player.length - 1];
-        if (arr.data.cpuBoats.includes(guess)) {
-          //hit
-          $("[data-coord=" + guess + "][data-player=cpu]").css("background-color", "rgba(100,40,40,0.6)");
-          hits++;
-          console.log(hits);
-          if (hits===34) {
-            alert("you win :)");
-          }
-          playerTurn = !playerTurn;
-          if (!playerTurn) {
-            cpuTurn();
-          }
-        } else {
-          //miss
-          $("[data-coord=" + guess + "][data-player=cpu]").css("background-color", "rgba(10,10,10,0.8)");
-          playerTurn = !playerTurn;
-          if (!playerTurn) {
-            cpuTurn();
-          }
-        }
-        if (arr.data.guesses.cpu) {
-          var cpuGuess = arr.data.guesses.cpu[arr.data.guesses.cpu.length - 1];
-          if (arr.data.playerBoats.includes(cpuGuess)) {
-            //hit
-            cpuHits++;
-            if(cpuHits===34) {
-              alert("you lose :(");
-            }
-            $("[data-coord=" + cpuGuess + "][data-player=player]").css("background-color", "rgba(100,40,40,0.6)");
-          } else {
-            //miss
-            $("[data-coord=" + cpuGuess + "][data-player=player]").css("background-color", "rgba(10,10,10,0.8)");
-          }
-        }
+    gameRef = "/users/" + user + "/games/" + gameID + "/data/";
+    db.ref(gameRef + "/guesses/player").once("value", function (snapshot) {
+      if (snapshot.val()) {
+        guesses = snapshot.val();
       }
     });
+    db.ref(gameRef + "/guesses/cpu").once("value", function (snapshot) {
+      if (snapshot.val()) {
+        cpuGuesses = snapshot.val();
+      }
+    });
+
+    $("#game-area-cpu").on("click", ".play-square", function () {
+      if (guesses.includes(this.dataset.coord)) {
+        console.log(this.dataset.coord + " already guessed that");
+      } else {
+        guesses.push(this.dataset.coord);
+        db.ref(gameRef + "/guesses/player").set(guesses);
+      }
+      cpuTurn(gameRef);
+    });
+
+    db.ref(gameRef + "/guesses/player").once("value", function (snapshot) {
+      var arr = snapshot.val();
+      if (arr) {
+        arr.forEach(function (guess) {
+          db.ref(gameRef + "/cpuBoats/").once("value", function (snapshot) {
+            if (snapshot.val().includes(guess)) {
+              //hit
+              $("[data-coord=" + guess + "][data-player=cpu]").css("background-color", "rgba(100,40,40,0.6)");
+            } else {
+              //miss
+              $("[data-coord=" + guess + "][data-player=cpu]").css("background-color", "rgba(10,10,10,0.8)");
+            }
+          });
+        });
+      }
+    });
+
+    db.ref(gameRef + "/guesses/cpu").once("value", function (snapshot) {
+      var arr = snapshot.val();
+      if (arr) {
+        arr.forEach(function (guess) {
+          db.ref(gameRef + "/playerBoats/").once("value", function (snapshot) {
+            if (snapshot.val().includes(guess)) {
+              //hit
+              $("[data-coord=" + guess + "][data-player=player]").css("background-color", "rgba(100,40,40,0.6)");
+            } else {
+              //miss
+              $("[data-coord=" + guess + "][data-player=player]").css("background-color", "rgba(10,10,10,0.8)");
+            }
+          });
+        });
+      }
+    });
+
+    db.ref(gameRef + "/guesses/player").on("value", function (snapshot) {
+      var arr = snapshot.val();
+      if (arr) {
+        var guess = arr[arr.length - 1];
+        db.ref(gameRef + "/cpuBoats/").once("value", function (snapshot) {
+          if (snapshot.val().includes(guess)) {
+            //hit
+            $("[data-coord=" + guess + "][data-player=cpu]").css("background-color", "rgba(100,40,40,0.6)");
+            if (snapshot.val().every(e => arr.indexOf(e) > -1)) {
+              console.log("player wins!");
+              $("#game-area-cpu").off("click", ".play-square");
+              db.ref(gameRef + "/winner/").set("player");
+              db.ref(gameRef).once("value", function (snapshot) {
+                var gameData = snapshot.val();
+                if (user !== "anon") {
+                  $.post("/api/games", {
+                    title: "game_" + gameID,
+                    body: JSON.stringify(gameData),
+                    UserId: user
+                  }, function (data) {
+                    console.log(data);
+                  });
+                }
+              });
+            }
+          } else {
+            //miss
+            $("[data-coord=" + guess + "][data-player=cpu]").css("background-color", "rgba(10,10,10,0.8)");
+          }
+        });
+      }
+    });
+
+    db.ref(gameRef + "/guesses/cpu").on("value", function (snapshot) {
+      var arr = snapshot.val();
+      if (arr) {
+        var guess = arr[arr.length - 1];
+        db.ref(gameRef + "/playerBoats/").once("value", function (snapshot) {
+          if (snapshot.val().includes(guess)) {
+            //hit
+            $("[data-coord=" + guess + "][data-player=player]").css("background-color", "rgba(100,40,40,0.6)");
+            if (snapshot.val().every(e => arr.indexOf(e) > -1)) {
+              console.log("cpu wins!");
+              $("#game-area-cpu").off("click", ".play-square");
+              db.ref(gameRef + "/winner/").set("cpu");
+              db.ref(gameRef).once("value", function (snapshot) {
+                var gameData = snapshot.val();
+                if (user !== "anon") {
+                  $.post("/api/games", {
+                    title: "game_" + gameID,
+                    body: JSON.stringify(gameData),
+                    UserId: user
+                  }, function (data) {
+                    console.log(data);
+                  });
+                }
+              });
+            }
+          } else {
+            //miss
+            $("[data-coord=" + guess + "][data-player=player]").css("background-color", "rgba(10,10,10,0.8)");
+          }
+        });
+      }
+    });
+
+
+
+
+
   });
 
-  $("#game-area-cpu").on("click", ".play-square", function () {
-    if (guesses.includes(this.dataset.coord)) {
-      console.log(this.dataset.coord + " already guessed that");
-    } else {
-      guesses.push(this.dataset.coord);
-      db.ref("games/" + gameID + "/data/guesses/player").set(guesses);
-    }
-  });
+
 
   //TODO: improve win screen
   //TODO: simple cpu AI
@@ -170,7 +256,39 @@ $(document).ready(function () {
 
 
 
-
-  //everything below this is pretty rough.
+  // if (arr.data.cpuBoats.includes(guess)) {
+  //   //hit
+  //   $("[data-coord=" + guess + "][data-player=cpu]").css("background-color", "rgba(100,40,40,0.6)");
+  //   hits++;
+  //   console.log(hits);
+  //   if (hits === 34) {
+  //     alert("you win :)");
+  //   }
+  //   playerTurn = !playerTurn;
+  //   if (!playerTurn) {
+  //     cpuTurn();
+  //   }
+  // } else {
+  //   //miss
+  //   $("[data-coord=" + guess + "][data-player=cpu]").css("background-color", "rgba(10,10,10,0.8)");
+  //   playerTurn = !playerTurn;
+  //   if (!playerTurn) {
+  //     cpuTurn();
+  //   }
+  // }
+  // if (arr.data.guesses.cpu) {
+  //   var cpuGuess = arr.data.guesses.cpu[arr.data.guesses.cpu.length - 1];
+  //   if (arr.data.playerBoats.includes(cpuGuess)) {
+  //     //hit
+  //     cpuHits++;
+  //     if (cpuHits === 34) {
+  //       alert("you lose :(");
+  //     }
+  //     $("[data-coord=" + cpuGuess + "][data-player=player]").css("background-color", "rgba(100,40,40,0.6)");
+  //   } else {
+  //     //miss
+  //     $("[data-coord=" + cpuGuess + "][data-player=player]").css("background-color", "rgba(10,10,10,0.8)");
+  //   }
+  // }
 
 });
