@@ -1,7 +1,7 @@
-$(document).ready(function() {
+$(document).ready(function () {
   // Getting jQuery references to the game body, title, form, and user select
-  var bodyInput = $("#body");
-  var titleInput = $("#title");
+  // var bodyInput = $("#body");
+  // var titleInput = $("#title");
   var cmsForm = $("#cms");
   var userSelect = $("#user");
   // Adding an event listener for when the form is submitted
@@ -31,17 +31,20 @@ $(document).ready(function() {
   function handleFormSubmit(event) {
     event.preventDefault();
     // Wont submit the game if we are missing a body, title, or user
-    if (!titleInput.val().trim() || !bodyInput.val().trim() || !userSelect.val()) {
+    if (
+      //!titleInput.val().trim() || 
+      //!bodyInput.val().trim() || 
+      !userSelect.val()) {
       return;
     }
     // Constructing a newGame object to hand to the database
     var newGame = {
-      title: titleInput
-        .val()
-        .trim(),
-      body: bodyInput
-        .val()
-        .trim(),
+      // title: titleInput
+      //   .val()
+      //   .trim(),
+      // body: bodyInput
+      //   .val()
+      //   .trim(),
       UserId: userSelect.val()
     };
 
@@ -53,13 +56,15 @@ $(document).ready(function() {
     }
     else {
       submitGame(newGame);
+      alert("Welcome! Let's play!")
     }
   }
 
   // Submits a new game and brings user to battleship page upon completion
   function submitGame(game) {
-    $.post("/api/games", game, function() {
-      window.location.href = "/battleship";
+    $.post("/api/games", game, function () {
+      //window.location.href = "/battleship";
+      console.log("user logged");
     });
   }
 
@@ -67,21 +72,21 @@ $(document).ready(function() {
   function getGameData(id, type) {
     var queryUrl;
     switch (type) {
-    case "game":
-      queryUrl = "/api/games/" + id;
-      break;
-    case "user":
-      queryUrl = "/api/users/" + id;
-      break;
-    default:
-      return;
+      case "game":
+        queryUrl = "/api/games/" + id;
+        break;
+      case "user":
+        queryUrl = "/api/users/" + id;
+        break;
+      default:
+        return;
     }
-    $.get(queryUrl, function(data) {
+    $.get(queryUrl, function (data) {
       if (data) {
         console.log(data.UserId || data.id);
         // If this game exists, prefill our cms forms with its data
-        titleInput.val(data.title);
-        bodyInput.val(data.body);
+        // titleInput.val(data.title);
+        // bodyInput.val(data.body);
         userId = data.UserId || data.id;
         // If we have a game with this id, set a flag for us to know to update the game
         // when we hit submit
@@ -120,15 +125,15 @@ $(document).ready(function() {
     return listOption;
   }
 
-  // Update a given game, bring user to the battleship page when done
-  function updateGame(game) {
-    $.ajax({
-      method: "PUT",
-      url: "/api/games",
-      data: game
-    })
-      .then(function() {
-        window.location.href = "/battleship";
-      });
-  }
+  //   // Update a given game, bring user to the battleship page when done
+  //   function updateGame(game) {
+  //     $.ajax({
+  //       method: "PUT",
+  //       url: "/api/games",
+  //       data: game
+  //     })
+  //       .then(function() {
+  //         window.location.href = "/battleship";
+  //       });
+  //   }
 });

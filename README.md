@@ -68,7 +68,7 @@ The app stores the user data you enter and email address and associates it with 
 
 ## DEMO
 ### Want to see a demo of it working? 
-### Click here: [Battleship! Video]()
+### Click here: [Battleship! Video](https://youtu.be/OoJCUN-0H34)
 
 ### Want to do it live?
 ### Click here: [L'Attaque! (Battleship!)](https://lattaque-battleship.herokuapp.com/)
