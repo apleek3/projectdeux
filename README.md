@@ -37,7 +37,8 @@ This App utilize a Model View Controller (MVC) Paradigm for code construction an
 *node.js - for running and testing our app outside of a browser
 *express - for conducting app through ports and connecting our users and servers
 *Heroku - for deploying the app to a cloud!
-
+*popper.js - library for handling the numerous poppers we will add to this page [Popper] (https://popper.js.org/)
+*sparkline.js - a jQuery plugin that generates small inline charts directly to the browser (ICEBOX - added to code) [Sparkline] (https://omnipotent.net/jquery.sparkline/#s-about)
 
 ## Setup
 
