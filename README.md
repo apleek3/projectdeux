@@ -18,27 +18,27 @@ This App utilize a Model View Controller (MVC) Paradigm for code construction an
 
 ## Requirements & Technologies Overiew
 ### UCD Ext. Course Project Requirements
-*Project must:
-  *Use a Node and Express Web Server;
-  *Be backed by a MySQL Database an ORM (not necessarily Sequelize);
-  *Have both GET and POST routes for retrieving and adding new data;
-  *Be deployed using Heroku (with Data);
-  *Utilize at least one new library, package, or technology that we haven’t discussed;
-  *Have a polished frontend / UI;
-  *Have folder structure that meets MVC Paradigm;
-  *Meet good quality coding standards (indentation, scoping, naming).
-  *Must not expose sensitive API key information on the server, see Protecting-API-Keys-In-Node.md
+* Project must:
+  * Use a Node and Express Web Server;
+  * Be backed by a MySQL Database an ORM (not necessarily Sequelize);
+  * Have both GET and POST routes for retrieving and adding new data;
+  * Be deployed using Heroku (with Data);
+  * Utilize at least one new library, package, or technology that we haven’t discussed;
+  * Have a polished frontend / UI;
+  * Have folder structure that meets MVC Paradigm;
+  * Meet good quality coding standards (indentation, scoping, naming).
+  * Must not expose sensitive API key information on the server, see Protecting-API-Keys-In-Node.md
 
 ### Tech Used
-*mySQl - for storing user and game results info
-*mySQL WorkBench - for interacting with the database
-*Firebase - for storing current game information
-*Sequelize - for taking care of information Creation, Reading, Updating, and Deletion of information (CRUD)
-*node.js - for running and testing our app outside of a browser
-*express - for conducting app through ports and connecting our users and servers
-*Heroku - for deploying the app to a cloud!
-*popper.js - library for handling the numerous poppers we will add to this page [Popper] (https://popper.js.org/)
-*sparkline.js - a jQuery plugin that generates small inline charts directly to the browser (ICEBOX - added to code) [Sparkline] (https://omnipotent.net/jquery.sparkline/#s-about)
+* mySQl - for storing user and game results info
+* mySQL WorkBench - for interacting with the database
+* Firebase - for storing current game information
+* Sequelize - for taking care of information Creation, Reading, Updating, and Deletion of information (CRUD)
+* node.js - for running and testing our app outside of a browser
+* express - for conducting app through ports and connecting our users and servers
+* Heroku - for deploying the app to a cloud!
+* popper.js - library for handling the numerous poppers we will add to this page [Popper](https://popper.js.org/)
+* sparkline.js - a jQuery plugin that generates small inline charts directly to the browser (ICEBOX - added to code) [Sparkline](https://omnipotent.net/jquery.sparkline/#s-about)
 
 ## Setup
 
