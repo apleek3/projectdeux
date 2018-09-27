@@ -125,7 +125,8 @@ $(document).ready(function () {
     return listOption;
   }
 
-  //   // Update a given game, bring user to the battleship page when done
+  //   SAVE FOR LATER (ICEBOX)
+  // Update a given game, bring user to the battleship page when done
   //   function updateGame(game) {
   //     $.ajax({
   //       method: "PUT",

@@ -1,5 +1,6 @@
+// Planned model for future games (ICEBOX). Right now set to default values. Currently operational.
 module.exports = function(sequelize, DataTypes) {
-  var Game = sequelize.define("Game", {
+  var Game = sequelize.define("Game", { 
     title: {
       type: DataTypes.STRING,
       allowNull: true,
