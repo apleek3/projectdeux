@@ -1,6 +1,6 @@
+    // Giving the User model some structure. Validates the email and is unique.
 module.exports = function (sequelize, DataTypes) {
   var User = sequelize.define("User", {
-    // Giving the User model a name of type STRING
     name: DataTypes.STRING,
     email: {
       type: DataTypes.STRING,
@@ -11,7 +11,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false
     }
     // ,
-    // pswd: {
+    // pswd: { //PASSWORD structure for later (ICEBOX)
 
     // }
   });
