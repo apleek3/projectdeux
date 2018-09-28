@@ -84,6 +84,24 @@ var guesses = [];
 var cpuGuesses = [];
 var hits = 0;
 var cpuHits = 0;
+
+var cpuCheckerboard = Array(10);
+for (var i = 0; i < 10; i++) {
+  cpuCheckerboard[i] = Array(5);
+}
+
+var aArr = alphArr(10);
+var nArr = numArr(10);
+console.log(aArr, nArr);
+console.log(cpuCheckerboard);
+for (var i = 0; i < 10; i++) {
+  for (var j = 0; j < 5; j++) {
+    cpuCheckerboard[i][j] = aArr[i] + nArr[j * 2 + i % 2];
+  }
+}
+console.log(cpuCheckerboard);
+
+
 var rngGuess = function () {
   return alphArr(10)[Math.floor(Math.random() * 10)] + numArr(10)[Math.floor(Math.random() * 10)];
 }
